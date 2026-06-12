@@ -1,119 +1,222 @@
-/* 清除預設邊距，隱藏滾動條讓畫布完美滿版 */
-margin: 0;
-padding: 0;
-body, html {
-    overflow: hidden;
-    background-color: #0b0b1a;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* 清除預設，設定深色背景 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* Landing Page 容器：覆蓋全螢幕 */
-#landing-page {
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #060913; /* 深邃夜空藍 */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #e0e6ed;
+}
+
+/* 玻璃擬物化的 UI 疊加層 */
+#ui-overlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    z-index: 10;
+    pointer-events: none; /* 預設讓滑鼠穿透到畫布 */
+}
+
+/* 控制面板樣式 (Image 1 左側) */
+#control-panel {
+    pointer-events: auto; /* 允許面板互動 */
+    width: 320px;
+    height: 100%;
+    background: rgba(13, 20, 36, 0.85); /* 半透明暗藍 */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-right: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease;
+}
+
+/* 面板頂部資訊 */
+.panel-header {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 25px;
+}
+
+.panel-header h2 {
+    font-size: 0.9rem;
+    color: #8a96b0;
+    font-weight: 400;
+}
+
+.badge {
+    align-self: flex-start;
+    padding: 3px 8px;
+    background: rgba(0, 255, 170, 0.1);
+    color: #00ffaa;
+    border-radius: 5px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+/* 選單按鈕 */
+.menu-items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.menu-btn {
+    pointer-events: auto;
+    background: none;
+    border: 1px solid transparent;
+    color: #a0accc;
+    text-align: left;
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.menu-btn .icon {
+    margin-right: 12px;
+    font-size: 1.1rem;
+    width: 20px;
+    text-align: center;
+}
+
+.menu-btn:hover {
+    background: rgba(255, 255, 255, 0.03);
+    color: #fff;
+}
+
+.menu-btn.active {
+    background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), rgba(0, 242, 254, 0.15));
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    color: #fff;
+    box-shadow: 0 0 15px rgba(0, 242, 254, 0.1);
+}
+
+.divider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.05);
+    margin: 25px 0;
+}
+
+/* 控制項控制樣式 (Image 1 slider 風格) */
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    flex-grow: 1;
+}
+
+.control-group label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #8a96b0;
+    margin-bottom: 8px;
+}
+
+.val-display {
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Slider 樣式 */
+input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    background: #232d44; /* 深色軌道 */
+    border-radius: 2px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); /* 藍色亮點 */
+    margin-top: -6px;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 242, 254, 0.6);
+}
+
+/* 下拉選單 */
+select {
+    width: 100%;
+    padding: 10px;
+    background: #182035;
+    color: #e0e6ed;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+/* Reset 按鈕 */
+#resetBtn {
+    margin-top: 15px;
+    padding: 12px;
+    background: rgba(255, 79, 79, 0.1);
+    color: #ff4f4f;
+    border: 1px solid rgba(255, 79, 79, 0.2);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+#resetBtn:hover {
+    background: rgba(255, 79, 79, 0.2);
+    box-shadow: 0 0 10px rgba(255, 79, 79, 0.3);
+}
+
+/* 狀態列 */
+#status {
+    color: #55607a;
+    font-size: 0.75rem;
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* 中央畫布提示 */
+#canvas-tip {
+    flex-grow: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: radial-gradient(circle, rgba(16,16,36,0.9) 0%, rgba(5,5,15,0.95) 100%);
-    z-index: 10;
-    transition: opacity 0.8s ease, pointer-events 0.8s ease;
+    opacity: 0.4;
 }
 
-/* 當加上 .fade-out 類別時，優雅地淡出並失去點擊判斷 */
-#landing-page.fade-out {
-    opacity: 0;
-    pointer-events: none;
-}
-
-/* 提示卡片樣式 */
-.card {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 40px;
-    border-radius: 20px;
-    text-align: center;
-    max-width: 450px;
-    color: #ffffff;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-}
-
-h1 {
-    font-size: 2rem;
-    margin-bottom: 10px;
-    letter-spacing: 2px;
-    background: linear-gradient(45deg, #00f2fe, #4facfe);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.subtitle {
-    color: #8a8ab0;
-    font-size: 0.9rem;
-    margin-bottom: 30px;
-}
-
-.instructions {
-    text-align: left;
-    background: rgba(0, 0, 0, 0.2);
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 30px;
-}
-
-.instructions h3 {
-    margin-top: 0;
-    color: #00f2fe;
-    font-size: 1.1rem;
-}
-
-.instructions ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.instructions li {
-    margin: 12px 0;
-    font-size: 0.95rem;
-    line-height: 1.5;
-    color: #e0e0ff;
-}
-
-.instructions strong {
-    color: #ffdd67;
-}
-
-/* 互動按鈕 */
-#start-btn {
-    background: linear-gradient(45deg, #00f2fe, #4facfe);
-    border: none;
-    padding: 12px 35px;
-    color: white;
-    font-size: 1.1rem;
-    font-weight: bold;
+#canvas-tip p {
+    color: #4facfe;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 15px 30px;
     border-radius: 50px;
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 4px 15px rgba(0, 242, 254, 0.4);
+    backdrop-filter: blur(5px);
+    font-size: 0.95rem;
 }
 
-#start-btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 20px rgba(0, 242, 254, 0.6);
-}
-
-#start-btn:active {
-    transform: scale(0.98);
-}
-
-/* p5.js 自動產生的 canvas 預設置底 */
+/* p5.js canvas 置底 */
 canvas {
-    display: block;
     position: absolute;
     top: 0;
     left: 0;
