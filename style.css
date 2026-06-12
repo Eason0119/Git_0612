@@ -9,12 +9,131 @@ body, html {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background: #060913; /* 深邃夜空藍 */
+    background: #060913; 
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #e0e6ed;
 }
 
-/* 玻璃擬物化的 UI 疊加層 */
+/* ==========================================
+   科幻風 Landing Page 
+   ========================================== */
+#landing-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: radial-gradient(circle at center, rgba(10, 16, 32, 0.95) 0%, rgba(4, 6, 12, 0.98) 100%);
+    z-index: 100; 
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), pointer-events 0.8s;
+}
+
+#landing-page.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.landing-card {
+    background: rgba(13, 20, 36, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 45px;
+    border-radius: 24px;
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 0 0 50px rgba(0, 242, 254, 0.05);
+}
+
+.landing-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    background: rgba(79, 172, 254, 0.1);
+    color: #00f2fe;
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    margin-bottom: 20px;
+}
+
+.landing-card h1 {
+    font-size: 2.4rem;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+    background: linear-gradient(45deg, #b927fc, #00f2fe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.landing-card .subtitle {
+    color: #7485a8;
+    font-size: 0.95rem;
+    margin-bottom: 35px;
+}
+
+.landing-card .instructions {
+    text-align: left;
+    background: rgba(5, 8, 16, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    padding: 24px;
+    border-radius: 16px;
+    margin-bottom: 35px;
+}
+
+.landing-card .instructions h3 {
+    margin-top: 0;
+    color: #00f2fe;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.landing-card .instructions ul {
+    list-style: none;
+}
+
+.landing-card .instructions li {
+    margin: 12px 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    color: #adc0e6;
+}
+
+.landing-card .instructions strong {
+    color: #ffcc00;
+}
+
+#start-btn {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    border: none;
+    padding: 14px 40px;
+    color: #050810;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 5px 20px rgba(0, 242, 254, 0.3);
+}
+
+#start-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 242, 254, 0.5);
+    filter: brightness(1.1);
+}
+
+#start-btn:active {
+    transform: translateY(1px);
+}
+
+/* ==========================================
+   主控制面板與 UI 疊加層
+   ========================================== */
 #ui-overlay {
     position: fixed;
     top: 0;
@@ -23,15 +142,14 @@ body, html {
     height: 100%;
     display: flex;
     z-index: 10;
-    pointer-events: none; /* 預設讓滑鼠穿透到畫布 */
+    pointer-events: none; 
 }
 
-/* 控制面板樣式 (Image 1 左側) */
 #control-panel {
-    pointer-events: auto; /* 允許面板互動 */
+    pointer-events: auto; 
     width: 320px;
     height: 100%;
-    background: rgba(13, 20, 36, 0.85); /* 半透明暗藍 */
+    background: rgba(13, 20, 36, 0.85); 
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border-right: 1px solid rgba(255, 255, 255, 0.08);
@@ -42,7 +160,6 @@ body, html {
     transition: transform 0.3s ease;
 }
 
-/* 面板頂部資訊 */
 .panel-header {
     display: flex;
     flex-direction: column;
@@ -67,7 +184,6 @@ body, html {
     letter-spacing: 0.5px;
 }
 
-/* 選單按鈕 */
 .menu-items {
     display: flex;
     flex-direction: column;
@@ -75,7 +191,6 @@ body, html {
 }
 
 .menu-btn {
-    pointer-events: auto;
     background: none;
     border: 1px solid transparent;
     color: #a0accc;
@@ -114,7 +229,6 @@ body, html {
     margin: 25px 0;
 }
 
-/* 控制項控制樣式 (Image 1 slider 風格) */
 .controls {
     display: flex;
     flex-direction: column;
@@ -135,7 +249,6 @@ body, html {
     font-weight: bold;
 }
 
-/* Slider 樣式 */
 input[type=range] {
     -webkit-appearance: none;
     width: 100%;
@@ -145,7 +258,7 @@ input[type=range] {
 input[type=range]::-webkit-slider-runnable-track {
     width: 100%;
     height: 4px;
-    background: #232d44; /* 深色軌道 */
+    background: #232d44; 
     border-radius: 2px;
 }
 
@@ -154,13 +267,12 @@ input[type=range]::-webkit-slider-thumb {
     height: 16px;
     width: 16px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); /* 藍色亮點 */
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); 
     margin-top: -6px;
     cursor: pointer;
     box-shadow: 0 0 10px rgba(0, 242, 254, 0.6);
 }
 
-/* 下拉選單 */
 select {
     width: 100%;
     padding: 10px;
@@ -172,7 +284,6 @@ select {
     cursor: pointer;
 }
 
-/* Reset 按鈕 */
 #resetBtn {
     margin-top: 15px;
     padding: 12px;
@@ -189,7 +300,6 @@ select {
     box-shadow: 0 0 10px rgba(255, 79, 79, 0.3);
 }
 
-/* 狀態列 */
 #status {
     color: #55607a;
     font-size: 0.75rem;
@@ -197,7 +307,6 @@ select {
     margin-top: 15px;
 }
 
-/* 中央畫布提示 */
 #canvas-tip {
     flex-grow: 1;
     display: flex;
@@ -215,7 +324,6 @@ select {
     font-size: 0.95rem;
 }
 
-/* p5.js canvas 置底 */
 canvas {
     position: absolute;
     top: 0;
